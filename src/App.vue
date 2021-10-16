@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <NavBar/>
-    <Main />
+
+    <router-view :key="$route.fullPath"/>
   </div>
 </template>
 
@@ -38,6 +39,11 @@ body{
   margin: 0 auto;
   padding-left: 30px;
   padding-right: 30px;
+}
+
+.body-dark-theme{
+    background: #202C36;
+    color: white;
 }
 
 </style>

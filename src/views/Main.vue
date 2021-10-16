@@ -1,38 +1,64 @@
 <template>
-  <div class="container main-container">
+  <div class="container header-container">
     <form class="search-form" action="google.com" method="POST">
       <label class="search-label"> 
           <img class="search-svg" src="../assets/search.svg" alt="search" width="18" height="18">    
-          <input class="search-input" type="search" placeholder="Search for a country…">
+          <input @input="updateValue" class="search-input" type="search" placeholder="Search for a country…">
       </label>
-      <select class="country-select">
-        <option class="country-select-option" value="" v-for="countryName in CountryNames" :key="countryName">{{countryName}}</option>
+      <select class="country-select" @input="updateSelect">
+        <option class="country-select-option" value="">Filter by Region</option>
+        <option class="country-select-option" :value="countryName" v-for="countryName in CountryNames" :key="countryName">{{countryName}}</option>
       </select>
     </form>
 
-    <CountryCreate/>
+    <div class="container main-container">
+      <CountryCreate v-for="country in sortedCountries.slice(0, 12)" :key="country.name" :country="country"/>
+    </div>
   </div>
 </template>
 
 <script>
-import CountryCreate from '@/components/CountryCreate.vue';
+import CountryCreate from '@/components/CountryCreate.vue'
+import { mapState } from 'vuex';
   export default {
      components: {
       CountryCreate
     },
     data() {
       return {
-        CountryNames: ['Filter by Region', 'Africa', 'America', 'Asia', 'Europe', 'Oceania']
+        CountryNames: ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania']
       }
     },
+    created() {
+      this.$store.dispatch('fetchCountries')
+    },
+    methods: {
+      updateValue(event) {
+        this.$store.dispatch('fetchSortCountry', event.target.value)
+      },
+      updateSelect(event) {
+        this.$store.dispatch('fetchFilterCountry', event.target.value)
+      }
+    },
+    computed: {
+      ...mapState(['sortedCountries'])
+    }
    
   }
 </script>
 
 <style scoped>
-.main-container{
+.header-container{
   padding-top: 45px;
   padding-bottom: 45px;
+}
+
+.main-container{
+  padding: 0;
+  padding-top: 48px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .search-form{

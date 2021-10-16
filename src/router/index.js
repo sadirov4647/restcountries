@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import NavBar from '../components/NavBar.vue'
-import OkRouter from '../components/OkRouter.vue'
+import Main from '../views/Main.vue'
+import CountryPage from '../views/CountryPage.vue';
 
 Vue.use(VueRouter)
 
@@ -9,13 +9,15 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: NavBar
+    component: Main,
+    props: true
   },
   {
-    path: '/OkRouter/:area',
-    name: '',
-    component:OkRouter
-  }
+    path: '/name/:name',
+    name: 'country-page',
+    component: CountryPage,
+    props: true
+  },
 ]
 
 const router = new VueRouter({

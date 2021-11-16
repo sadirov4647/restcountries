@@ -34,10 +34,10 @@ export default new Vuex.Store({
         .then(response => {
           console.log(response.data);
           commit('SET_COUNTRIES', response.data)
-        }) 
+        })
     },
     fetchSortCountry({ commit, state, getters }, name) {
-      let countries = getters.searchCountries(name) 
+      let countries = getters.searchCountries(name)
       if(name === ''){
         commit('SET_COUNTRIES', state.countriesList)
       } else {
@@ -59,8 +59,6 @@ export default new Vuex.Store({
           commit('SET_COUNTRY', response.data[0])
         })
     }
-  },  
-  modules: {
   },
   getters: {
     searchCountries: state => name => {
